@@ -92,6 +92,7 @@ export default class SingleLinkedList<T = any> implements LinkedList<T> {
       node = node?.next;
     }
     node!.next = node?.next?.next;
+    size--;
     return this;
   }
 
