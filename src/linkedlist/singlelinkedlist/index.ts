@@ -110,6 +110,10 @@ export default class SingleLinkedList<T = any> implements LinkedList<T> {
     }
   }
 
+  toString(): string {
+    return [...this].join(" -> ");
+  }
+
   *[Symbol.iterator]() {
     let tempNode = this.head;
     while (tempNode) {
