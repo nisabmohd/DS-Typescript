@@ -24,7 +24,11 @@ export default class Queue<T> implements IQueue<T> {
     return this.list.size;
   }
 
-  toString() {
-    return [...this.list];
+  clear() {
+    this.list.clear();
+  }
+
+  toString(): string {
+    return [...this.list].toString();
   }
 }
