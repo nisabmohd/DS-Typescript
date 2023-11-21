@@ -5,11 +5,16 @@ export interface LinkedList<T> {
   insertAt: (val: T, index: number) => LinkedList<T>;
 
   // remove methods
-  removeFirst: () => LinkedList<T>;
-  removeLast: () => LinkedList<T>;
-  removeAt: (index: number) => LinkedList<T>;
+  removeFirst: () => T | undefined;
+  removeLast: () => T | undefined;
+  removeAt: (index: number) => T | undefined;
   clear: () => void;
+
+  //retrive methods
+  getAt: (index: number) => T | undefined;
 
   // iterate methods
   forEach: (cb: (item: T) => void) => void;
+
+  readonly size: number;
 }
