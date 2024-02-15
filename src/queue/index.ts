@@ -1,34 +1,31 @@
-import DoubleLinkedList from "../linkedlist/doublelinkedlist";
-import { IQueue } from "./type";
+import DoubleLinkedList from "../doublelinkedlist";
 
-export default class Queue<T> implements IQueue<T> {
-  private list: DoubleLinkedList<T>;
-  constructor() {
+// Queue class definition
+export default class Queue<T> {
+  private list: DoubleLinkedList<T>; // Internal representation of queue using Double Linked List
+
+  // Constructor to initialize the queue with an empty Double Linked List
+  public constructor() {
     this.list = new DoubleLinkedList<T>();
   }
 
-  add(val: T) {
+  // Method to insert an element into the queue
+  public insert(val: T) {
     this.list.insertLast(val);
-    return this;
   }
 
-  remove() {
-    return this.list.removeLast();
-  }
-
-  get peek() {
-    return this.list.getAt(0);
-  }
-
-  get size() {
+  // Getter method to retrieve the size of the queue
+  public get size() {
     return this.list.size;
   }
 
-  clear() {
-    this.list.clear();
+  // Method to remove the element from the front of the queue
+  public remove() {
+    return this.list.deleteFirst();
   }
 
-  toString(): string {
-    return [...this.list].toString();
+  // Method to iterate over all elements in the queue
+  public forEach(cb: (val: T) => void) {
+    this.list.forEach(cb);
   }
 }

@@ -1,15 +1,16 @@
 {
-  "name": "ds-typescript",
+  "name": "data-structures-ts",
   "version": "1.0.0",
-  "description": "All Data structures implemented in typescript",
-  "main": "src/main.ts",
+  "description": "All data structures in Typescript",
+  "main": "src",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transpile": "tsc"
+    "build": "npx tsc"
   },
-  "author": "Nisab Mohd",
+  "author": "Nisab",
   "license": "MIT",
   "devDependencies": {
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

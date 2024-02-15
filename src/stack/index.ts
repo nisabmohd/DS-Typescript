@@ -1,27 +1,25 @@
-import DoubleLinkedList from "../linkedlist/doublelinkedlist";
-import { IStack } from "./type";
+// Stack class definition
+// This class is a wrapper above the built-in JavaScript array, providing stack functionalities
+class Stack<T> {
+  private arr: T[]; // Array to store stack elements
 
-export default class Stack<T> implements IStack<T> {
-  private list: DoubleLinkedList<T> = new DoubleLinkedList<T>();
-
-  push(val: T) {
-    this.list.insertLast(val);
-    return this;
+  // Constructor to initialize an empty stack
+  public constructor() {
+    this.arr = [];
   }
 
-  pop() {
-    return this.list.removeLast();
+  // Method to push an element onto the stack
+  public push(val: T) {
+    this.arr.push(val);
   }
 
-  get size() {
-    return this.list.size;
+  // Method to pop an element from the top of the stack and return it
+  public pop(): T | undefined {
+    return this.arr.pop();
   }
 
-  get peek() {
-    return this.list.getAt(this.list.size - 1);
-  }
-
-  toString(): string {
-    return [...this.list].toString();
+  // Getter method to retrieve the size of the stack
+  public get size() {
+    return this.arr.length;
   }
 }
