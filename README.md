@@ -11,3 +11,5 @@ This repository contains implementations of various data structures in TypeScrip
 - Queue
 - Deque
 - Trie
+
+//TODO: other data structures

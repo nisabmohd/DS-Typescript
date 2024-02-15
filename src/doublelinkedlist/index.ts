@@ -2,6 +2,8 @@ class DoubleListNode<T> {
   val: T;
   next: DoubleListNode<T> | null;
   prev: DoubleListNode<T> | null;
+
+  // Constructor to create a new node
   public constructor(
     val: T,
     prev?: DoubleListNode<T> | null,
@@ -18,24 +20,29 @@ export default class DoubleLinkedList<T = any> {
   private tail: DoubleListNode<T> | null;
   private listSize: number;
 
+  // Constructor to initialize an empty double linked list
   public constructor() {
     this.head = null;
     this.tail = null;
     this.listSize = 0;
   }
 
+  // Getter method to retrieve the size of the list
   public get size() {
     return this.listSize;
   }
 
+  // Method to increment the size of the list
   private incrementSize() {
     this.listSize++;
   }
 
+  // Method to decrement the size of the list
   private decrementSize() {
     this.listSize--;
   }
 
+  // Method to initialize the list with a single node
   private init(val: T) {
     const node = new DoubleListNode(val);
     this.head = node;
@@ -43,6 +50,7 @@ export default class DoubleLinkedList<T = any> {
     this.incrementSize();
   }
 
+  // Method to insert an element at the beginning of the list
   public insertFirst(val: T) {
     if (this.head == null && this.tail == null) {
       return this.init(val);
@@ -54,6 +62,7 @@ export default class DoubleLinkedList<T = any> {
     this.incrementSize();
   }
 
+  // Method to insert an element at the end of the list
   public insertLast(val: T) {
     if (this.head == null && this.tail == null) return this.init(val);
     const node = new DoubleListNode(val);
@@ -63,6 +72,7 @@ export default class DoubleLinkedList<T = any> {
     this.incrementSize();
   }
 
+  // Method to insert an element at a specific index in the list
   public insertAt(val: T, index: number) {
     if (index > this.size || index < 0) throw new Error("Invalid index!");
     if (index == 0) return this.insertFirst(val);
@@ -80,6 +90,7 @@ export default class DoubleLinkedList<T = any> {
     this.incrementSize();
   }
 
+  // Method to delete the first element from the list
   public deleteFirst(): T | undefined {
     if (this.size == 0) return;
     const val = this.head!.val;
@@ -93,6 +104,7 @@ export default class DoubleLinkedList<T = any> {
     return val;
   }
 
+  // Method to delete the last element from the list
   public deleteLast(): T | undefined {
     if (this.size == 0) return;
     const val = this.tail!.val;
@@ -106,6 +118,7 @@ export default class DoubleLinkedList<T = any> {
     return val;
   }
 
+  // Method to delete an element at a specific index from the list
   public deleteAt(index: number) {
     if (index >= this.size || index < 0) throw new Error("Invalid index!");
     if (this.head == null) return;
@@ -124,12 +137,14 @@ export default class DoubleLinkedList<T = any> {
     return val;
   }
 
+  // Method to clear the list
   public clear() {
     this.head = null;
     this.tail = null;
     this.listSize = 0;
   }
 
+  // Method to iterate over all elements in the list
   public forEach(cb: (val: T) => void) {
     let node = this.head;
     while (node != null) {
