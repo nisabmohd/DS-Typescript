@@ -1,83 +1,55 @@
-//TODO:
+import Queue from "../queue";
 
 export default class Graph<T> {
-  private map: Map<T, Set<T>>;
+  private adj: Map<T, Set<T>>;
   private isDirected: boolean;
 
-  public constructor(directed: boolean = false) {
-    this.map = new Map<T, Set<T>>();
-    this.isDirected = directed;
+  public constructor(isDirected?: boolean) {
+    this.adj = new Map<T, Set<T>>();
+    this.isDirected = isDirected ?? false;
   }
 
-  public addEdge(src: T, des: T) {
-    if (!this.map.has(src)) this.map.set(src, new Set<T>());
-    if (!this.map.has(des)) this.map.set(des, new Set<T>());
-    this.map.get(src)!.add(des);
-    if (!this.isDirected) {
-      this.map.get(des)!.add(src);
-    }
+  public addEdge(s: T, d: T | null) {
+    if (!this.adj.has(s)) this.adj.set(s, new Set<T>());
+    if (d && !this.adj.has(d)) this.adj.set(d, new Set<T>());
+    if (!d) return;
+    this.adj.get(s)!.add(d);
+    if (!this.isDirected) this.adj.get(d)?.add(s);
   }
 
-  public removeEdge(src: T, des: T) {
-    if (!this.map.has(src) || !this.map.has(des))
-      throw new Error("Invalid source or target");
-    this.map.get(src)!.delete(des);
-    if (!this.isDirected) {
-      this.map.get(des)!.delete(src);
-    }
-  }
-
-  public hasEdge(src: T, des: T) {
-    return this.map.get(src)?.has(des);
-  }
-
-  private DFSUtil(src: T, visited: Set<T>): T[] {
-    visited.add(src);
-    const arr: T[] = [src];
-    this.map.get(src)!.forEach((k) => {
-      if (!visited.has(k)) {
-        arr.push(...this.DFSUtil(k, visited));
+  private dfsHelper(s: T, vis: Set<T>): T[] {
+    vis.add(s);
+    const ans: T[] = [s];
+    this.adj.get(s)!.forEach((item) => {
+      if (!vis.has(item)) {
+        ans.push(...this.dfsHelper(item, vis));
       }
     });
-    return arr;
-  }
-
-  public DFS(src: T, coverAll: boolean): T[] {
-    if (!this.map.has(src)) throw new Error("Vertex not found");
-    let visited = new Set<T>();
-    const ans: T[] = [];
-    if (coverAll) {
-      const itr = this.map.keys();
-      while (true) {
-        const { value, done } = itr.next();
-        if (done) break;
-        if (!visited.has(value)) ans.push(...this.DFSUtil(value, visited));
-      }
-    } else {
-      ans.push(...this.DFSUtil(src, visited));
-    }
     return ans;
   }
 
-  public BFS(src: T, coverAll: boolean): T[] {
-    return [];
+  public dfs(s: T): T[] {
+    if (!this.adj.has(s)) return [];
+    return this.dfsHelper(s, new Set<T>());
   }
 
-  private hasCycleDirected(): boolean {
-    return false;
-  }
-
-  private hasCycleUndirected(): boolean {
-    return false;
-  }
-
-  public hasCycle() {
-    return this.isDirected
-      ? this.hasCycleDirected()
-      : this.hasCycleUndirected();
-  }
-
-  public clear() {
-    this.map = new Map<T, Set<T>>();
+  public bfs(s: T): T[] {
+    const ans: T[] = [];
+    if (!this.adj.has(s)) return [];
+    const visited = new Set<T>();
+    const q = new Queue<T>();
+    q.insert(s);
+    visited.add(s);
+    while (q.size != 0) {
+      const node = q.remove()!;
+      ans.push(node);
+      this.adj.get(node)?.forEach((neighbour) => {
+        if (!visited.has(neighbour)) {
+          q.insert(neighbour);
+          visited.add(neighbour);
+        }
+      });
+    }
+    return ans;
   }
 }

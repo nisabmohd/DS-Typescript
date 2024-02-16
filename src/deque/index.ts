@@ -1,4 +1,4 @@
-import DoubleLinkedList from "../doublelinkedlist";
+import DoubleLinkedList from "../double-linkedlist";
 
 // Deque class definition
 export default class Deque<T> {

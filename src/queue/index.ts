@@ -1,4 +1,4 @@
-import DoubleLinkedList from "../doublelinkedlist";
+import DoubleLinkedList from "../double-linkedlist";
 
 // Queue class definition
 export default class Queue<T> {
